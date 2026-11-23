@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A1 English · Lesson 1</title>
+<style>
+  :root {
+    --bg: #faf8f4;
+    --card: #ffffff;
+    --ink: #1f2430;
+    --muted: #6b7280;
+    --accent: #c8402f;
+    --accent-soft: #fbe9e6;
+    --zh: #8a5a00;
+    --zh-bg: #fff7e6;
+    --line: #e7e2d9;
+    --ok: #1f8a4c;
+    --bad: #c0392b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 17px/1.6 "Segoe UI", system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  header {
+    background: var(--accent);
+    color: #fff;
+    padding: 32px 16px 28px;
+    text-align: center;
+  }
+  header h1 { margin: 0 0 4px; font-size: 2rem; }
+  header p { margin: 0; opacity: .9; }
+  .level {
+    display: inline-block; background: #fff; color: var(--accent);
+    font-weight: 700; border-radius: 999px; padding: 2px 12px; margin-bottom: 10px; font-size: .85rem;
+  }
+  .toolbar {
+    position: sticky; top: 0; z-index: 5;
+    background: var(--card); border-bottom: 1px solid var(--line);
+    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+    padding: 10px 16px;
+  }
+  .toolbar a, .toolbar button {
+    font: inherit; font-size: .9rem; color: var(--ink); text-decoration: none;
+    border: 1px solid var(--line); background: var(--bg); border-radius: 8px; padding: 4px 10px; cursor: pointer;
+  }
+  .toolbar button { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  main { max-width: 980px; margin: 0 auto; padding: 24px 16px 64px; }
+  section {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 22px 22px 18px; margin-bottom: 22px;
+  }
+  h2 { margin: 0 0 14px; font-size: 1.35rem; color: var(--accent); }
+  h2 .zh { font-size: 1rem; margin-left: 8px; }
+  h3 { margin: 18px 0 8px; }
+
+  /* Two-column English | Chinese rows */
+  .row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    padding: 10px 0; border-bottom: 1px dashed var(--line); align-items: start;
+  }
+  .row:last-child { border-bottom: 0; }
+  .en { font-weight: 500; }
+  .zh {
+    color: var(--zh); background: var(--zh-bg); border-left: 3px solid #f0c36d;
+    padding: 2px 10px; border-radius: 4px;
+  }
+  .hide-zh .zh { visibility: hidden; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  th { font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+  td.zh { border-left: 0; border-radius: 0; }
+  .ipa { color: var(--muted); font-family: "Lucida Sans Unicode", "Arial Unicode MS", sans-serif; font-size: .95rem; }
+
+  .say {
+    border: 0; background: var(--accent-soft); color: var(--accent); border-radius: 50%;
+    width: 32px; height: 32px; cursor: pointer; font-size: 15px; flex: none;
+  }
+  .say:hover { background: var(--accent); color: #fff; }
+
+  .dialogue .line { display: grid; grid-template-columns: 70px 1fr 1fr 36px; gap: 12px; align-items: start; padding: 8px 0; border-bottom: 1px dashed var(--line); }
+  .speaker { font-weight: 700; color: var(--accent); }
+
+  .note {
+    background: #eef6ff; border: 1px solid #cfe3fb; border-radius: 10px; padding: 12px 14px; margin: 12px 0;
+  }
+  .note strong { color: #1d4f91; }
+
+  .grammar td:first-child { font-weight: 700; }
+  .wrong { color: var(--bad); text-decoration: line-through; }
+  .right { color: var(--ok); font-weight: 600; }
+
+  .q { padding: 10px 0; border-bottom: 1px dashed var(--line); }
+  .q select, .q input {
+    font: inherit; padding: 3px 6px; border: 1px solid var(--line); border-radius: 6px; min-width: 80px;
+  }
+  .q .zh { display: block; margin-top: 4px; font-size: .92rem; border-left-width: 2px; }
+  .q.correct select, .q.correct input { border-color: var(--ok); background: #e9f7ef; }
+  .q.incorrect select, .q.incorrect input { border-color: var(--bad); background: #fdecea; }
+  .check {
+    margin-top: 14px; font: inherit; font-weight: 600; background: var(--accent); color: #fff;
+    border: 0; border-radius: 8px; padding: 8px 18px; cursor: pointer;
+  }
+  .score { margin-left: 12px; font-weight: 600; }
+
+  .numbers { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .num {
+    border: 1px solid var(--line); border-radius: 10px; padding: 10px; text-align: center; cursor: pointer; background: var(--bg);
+  }
+  .num:hover { border-color: var(--accent); }
+  .num b { display: block; font-size: 1.6rem; color: var(--accent); }
+  .num .zh { display: inline-block; margin-top: 4px; border-left: 0; }
+
+  ul.goals { margin: 0; padding: 0; list-style: none; }
+  ul.goals li { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 6px 0; }
+  ul.goals li .en::before { content: "✓ "; color: var(--ok); font-weight: 700; }
+
+  footer { text-align: center; color: var(--muted); font-size: .9rem; padding-bottom: 30px; }
+
+  @media (max-width: 640px) {
+    .row, ul.goals li { grid-template-columns: 1fr; gap: 4px; }
+    .dialogue .line { grid-template-columns: 52px 1fr 32px; }
+    .dialogue .line .zh { grid-column: 2 / 3; }
+    .numbers { grid-template-columns: repeat(2, 1fr); }
+    .hide-col { display: none; }
+    section { padding: 18px 14px; }
+  }
+  @media print {
+    .toolbar, .say, .check { display: none; }
+    section { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="level">CEFR A1 · 入门级</span>
+  <h1>Lesson 1: Hello! Nice to Meet You</h1>
+  <p>第一课：你好！很高兴认识你</p>
+</header>
+
+<nav class="toolbar">
+  <a href="#goals">Goals 目标</a>
+  <a href="#vocab">Words 词汇</a>
+  <a href="#phrases">Phrases 句子</a>
+  <a href="#dialogue">Dialogue 对话</a>
+  <a href="#grammar">Grammar 语法</a>
+  <a href="#numbers">Numbers 数字</a>
+  <a href="#practice">Practice 练习</a>
+  <a href="#homework">Homework 作业</a>
+  <button id="toggleZh" type="button">Hide Chinese 隐藏中文</button>
+</nav>
+
+<main id="lesson">
+
+  <!-- 1. GOALS -->
+  <section id="goals">
+    <h2>Learning Goals <span class="zh">学习目标</span></h2>
+    <ul class="goals">
+      <li><span class="en">Say hello and goodbye.</span><span class="zh">会说"你好"和"再见"。</span></li>
+      <li><span class="en">Say your name and ask someone's name.</span><span class="zh">会介绍自己的名字，并询问别人的名字。</span></li>
+      <li><span class="en">Say where you are from.</span><span class="zh">会说自己来自哪里。</span></li>
+      <li><span class="en">Use the verb "to be": am / is / are.</span><span class="zh">会使用 be 动词：am / is / are。</span></li>
+      <li><span class="en">Count from 1 to 10.</span><span class="zh">会从 1 数到 10。</span></li>
+    </ul>
+    <div class="note">
+      <strong>Tip 小提示:</strong> Click <button class="say" type="button" aria-label="example" onclick="speak('Hello!')">🔊</button> to hear the English.
+      <span class="zh">点击喇叭按钮可以听英语发音。</span>
+    </div>
+  </section>
+
+  <!-- 2. VOCABULARY -->
+  <section id="vocab">
+    <h2>Key Words <span class="zh">重点词汇</span></h2>
+    <table>
+      <thead>
+        <tr><th></th><th>English 英语</th><th class="hide-col">Sound 音标</th><th>Chinese 中文</th></tr>
+      </thead>
+      <tbody id="vocabBody"></tbody>
+    </table>
+  </section>
+
+  <!-- 3. PHRASES -->
+  <section id="phrases">
+    <h2>Useful Phrases <span class="zh">常用句子</span></h2>
+    <div id="phraseList"></div>
+  </section>
+
+  <!-- 4. DIALOGUE -->
+  <section id="dialogue" class="dialogue">
+    <h2>Dialogue: First Day at School <span class="zh">对话：开学第一天</span></h2>
+    <div id="dialogueLines"></div>
+    <button class="check" type="button" onclick="playDialogue()">▶ Play whole dialogue 播放全部对话</button>
+  </section>
+
+  <!-- 5. GRAMMAR -->
+  <section id="grammar" class="grammar">
+    <h2>Grammar: The Verb "to be" <span class="zh">语法：be 动词</span></h2>
+    <div class="row">
+      <div class="en">"To be" means <em>is / exists</em>. It changes with the person.</div>
+      <div class="zh">be 动词相当于中文的"是"。它会根据主语（人称）变化。</div>
+    </div>
+
+    <table>
+      <thead><tr><th>Subject 主语</th><th>be</th><th>Example 例句</th><th>Chinese 中文</th></tr></thead>
+      <tbody>
+        <tr><td>I</td><td>am</td><td>I <b>am</b> Li Ming.</td><td class="zh">我是李明。</td></tr>
+        <tr><td>You</td><td>are</td><td>You <b>are</b> my teacher.</td><td class="zh">你是我的老师。</td></tr>
+        <tr><td>He</td><td>is</td><td>He <b>is</b> from Beijing.</td><td class="zh">他来自北京。</td></tr>
+        <tr><td>She</td><td>is</td><td>She <b>is</b> a student.</td><td class="zh">她是一名学生。</td></tr>
+        <tr><td>It</td><td>is</td><td>It <b>is</b> a book.</td><td class="zh">它是一本书。</td></tr>
+        <tr><td>We</td><td>are</td><td>We <b>are</b> friends.</td><td class="zh">我们是朋友。</td></tr>
+        <tr><td>They</td><td>are</td><td>They <b>are</b> from China.</td><td class="zh">他们来自中国。</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Short forms 缩写</h3>
+    <div class="row"><div class="en">I am → <b>I'm</b> &nbsp;·&nbsp; You are → <b>You're</b> &nbsp;·&nbsp; He is → <b>He's</b> &nbsp;·&nbsp; She is → <b>She's</b></div><div class="zh">口语中常用缩写，意思不变。</div></div>
+
+    <h3>Questions 疑问句</h3>
+    <div class="row"><div class="en">Put <b>be</b> first: <b>Are</b> you a student? — Yes, I am. / No, I'm not.</div><div class="zh">把 be 动词放到句首就变成问句：你是学生吗？—— 是的。/ 不是。</div></div>
+
+    <h3>Common mistakes for Chinese speakers 中国学生常见错误</h3>
+    <div class="row">
+      <div class="en"><span class="wrong">I student.</span> → <span class="right">I am a student.</span></div>
+      <div class="zh">中文可以省略"是"，但英语不能省略 be 动词；单数名词前要加 a / an。</div>
+    </div>
+    <div class="row">
+      <div class="en"><span class="wrong">She is boy.</span> → <span class="right">He is a boy.</span></div>
+      <div class="zh">中文"他"和"她"读音相同，英语里 <b>he</b>（男）和 <b>she</b>（女）发音不同，要注意区分。</div>
+    </div>
+    <div class="row">
+      <div class="en"><span class="wrong">I am come from China.</span> → <span class="right">I come from China.</span> / <span class="right">I am from China.</span></div>
+      <div class="zh">am 和 come 不能同时使用。二选一：I come from… 或 I am from…</div>
+    </div>
+  </section>
+
+  <!-- 6. NUMBERS -->
+  <section id="numbers">
+    <h2>Numbers 1–10 <span class="zh">数字 1–10</span></h2>
+    <div class="numbers" id="numberGrid"></div>
+  </section>
+
+  <!-- 7. PRACTICE -->
+  <section id="practice">
+    <h2>Practice <span class="zh">课堂练习</span></h2>
+
+    <h3>A. Choose am / is / are <span class="zh">选择 am / is / are</span></h3>
+    <div id="quizA"></div>
+    <button class="check" type="button" onclick="checkQuiz('quizA')">Check answers 检查答案</button><span class="score" id="quizA-score"></span>
+
+    <h3>B. Write the English word <span class="zh">写出英语单词</span></h3>
+    <div id="quizB"></div>
+    <button class="check" type="button" onclick="checkQuiz('quizB')">Check answers 检查答案</button><span class="score" id="quizB-score"></span>
+
+    <h3>C. Speaking: talk with a partner <span class="zh">口语：和同伴练习</span></h3>
+    <div class="row"><div class="en">A: Hello! What's your name?</div><div class="zh">A：你好！你叫什么名字？</div></div>
+    <div class="row"><div class="en">B: Hi! My name is ____. And you?</div><div class="zh">B：你好！我叫____。你呢？</div></div>
+    <div class="row"><div class="en">A: I'm ____. Where are you from?</div><div class="zh">A：我是____。你来自哪里？</div></div>
+    <div class="row"><div class="en">B: I'm from ____. Nice to meet you!</div><div class="zh">B：我来自____。很高兴认识你！</div></div>
+    <div class="row"><div class="en">A: Nice to meet you, too!</div><div class="zh">A：我也很高兴认识你！</div></div>
+  </section>
+
+  <!-- 8. HOMEWORK -->
+  <section id="homework">
+    <h2>Homework <span class="zh">课后作业</span></h2>
+    <div class="row"><div class="en">1. Write 5 sentences about you. Use <b>am / is / are</b>.</div><div class="zh">1. 用 am / is / are 写 5 句介绍自己的句子。</div></div>
+    <div class="row"><div class="en">2. Read the dialogue aloud 3 times.</div><div class="zh">2. 大声朗读对话 3 遍。</div></div>
+    <div class="row"><div class="en">3. Learn the numbers 1–10. Say your phone number in English.</div><div class="zh">3. 记住数字 1–10，并用英语说出你的电话号码。</div></div>
+    <div class="note">
+      <strong>Example 范例:</strong> Hello! I'm Wang Fang. I am 18. I am from Shanghai. I am a student. My teacher is very nice.
+      <span class="zh" style="display:block;margin-top:6px">你好！我是王芳。我 18 岁。我来自上海。我是一名学生。我的老师很好。</span>
+    </div>
+  </section>
+</main>
+
+<footer>A1 English for Chinese learners · 中国学生 A1 英语课程 · Lesson 1 / 第一课</footer>
+
+<script>
+  // ---------- Data ----------
+  const vocab = [
+    ["hello", "/həˈləʊ/", "你好"],
+    ["hi", "/haɪ/", "嗨（更随意的“你好”）"],
+    ["goodbye", "/ɡʊdˈbaɪ/", "再见"],
+    ["name", "/neɪm/", "名字"],
+    ["teacher", "/ˈtiːtʃə/", "老师"],
+    ["student", "/ˈstjuːdənt/", "学生"],
+    ["friend", "/frend/", "朋友"],
+    ["China", "/ˈtʃaɪnə/", "中国"],
+    ["Chinese", "/tʃaɪˈniːz/", "中国人；中文"],
+    ["morning", "/ˈmɔːnɪŋ/", "早上"],
+    ["thank you", "/ˈθæŋk juː/", "谢谢"],
+    ["please", "/pliːz/", "请"],
+  ];
+
+  const phrases = [
+    ["Good morning!", "早上好！"],
+    ["How are you?", "你好吗？"],
+    ["I'm fine, thank you. And you?", "我很好，谢谢。你呢？"],
+    ["What's your name?", "你叫什么名字？"],
+    ["My name is Li Ming.", "我叫李明。"],
+    ["Where are you from?", "你来自哪里？"],
+    ["I'm from China.", "我来自中国。"],
+    ["Nice to meet you.", "很高兴认识你。"],
+    ["See you tomorrow!", "明天见！"],
+    ["Sorry, can you say that again, please?", "对不起，你能再说一遍吗？"],
+  ];
+
+  const dialogue = [
+    ["Anna", "Good morning! I'm Anna. I'm your teacher.", "早上好！我是安娜，我是你们的老师。"],
+    ["Li Ming", "Good morning, Anna!", "早上好，安娜！"],
+    ["Anna", "What's your name?", "你叫什么名字？"],
+    ["Li Ming", "My name is Li Ming.", "我叫李明。"],
+    ["Anna", "Nice to meet you, Li Ming. Where are you from?", "很高兴认识你，李明。你来自哪里？"],
+    ["Li Ming", "I'm from Chengdu, China.", "我来自中国成都。"],
+    ["Anna", "Great! Is she your friend?", "太好了！她是你的朋友吗？"],
+    ["Li Ming", "Yes, she is. She is Wang Fang.", "是的。她是王芳。"],
+    ["Wang Fang", "Hello! Nice to meet you, Anna.", "你好！很高兴认识您，安娜。"],
+    ["Anna", "Nice to meet you, too!", "我也很高兴认识你！"],
+  ];
+
+  const numbers = [
+    [1, "one", "一"], [2, "two", "二"], [3, "three", "三"], [4, "four", "四"], [5, "five", "五"],
+    [6, "six", "六"], [7, "seven", "七"], [8, "eight", "八"], [9, "nine", "九"], [10, "ten", "十"],
+  ];
+
+  const quizA = [
+    ["I", "a student.", "am", "我是一名学生。"],
+    ["She", "from Beijing.", "is", "她来自北京。"],
+    ["We", "friends.", "are", "我们是朋友。"],
+    ["You", "my teacher.", "are", "你是我的老师。"],
+    ["He", "ten years old.", "is", "他十岁。"],
+    ["They", "Chinese.", "are", "他们是中国人。"],
+  ];
+
+  const quizB = [
+    ["老师", "teacher"],
+    ["朋友", "friend"],
+    ["名字", "name"],
+    ["再见", "goodbye"],
+    ["谢谢", "thank you"],
+  ];
+
+  // ---------- Speech ----------
+  function speak(text) {
+    if (!("speechSynthesis" in window)) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-GB";
+    u.rate = 0.85;
+    speechSynthesis.speak(u);
+  }
+  function playDialogue() {
+    if (!("speechSynthesis" in window)) return;
+    speechSynthesis.cancel();
+    dialogue.forEach(([, en]) => {
+      const u = new SpeechSynthesisUtterance(en);
+      u.lang = "en-GB"; u.rate = 0.85;
+      speechSynthesis.speak(u);
+    });
+  }
+  const sayBtn = (text) => {
+    const b = document.createElement("button");
+    b.className = "say"; b.type = "button"; b.textContent = "🔊";
+    b.setAttribute("aria-label", "Listen: " + text);
+    b.onclick = () => speak(text);
+    return b;
+  };
+  const el = (tag, cls, text) => {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  };
+
+  // ---------- Render ----------
+  const vb = document.getElementById("vocabBody");
+  vocab.forEach(([en, ipa, zh]) => {
+    const tr = el("tr");
+    const td0 = el("td"); td0.appendChild(sayBtn(en));
+    tr.append(td0, el("td", "en", en), el("td", "ipa hide-col", ipa), el("td", "zh", zh));
+    vb.appendChild(tr);
+  });
+
+  const pl = document.getElementById("phraseList");
+  phrases.forEach(([en, zh]) => {
+    const row = el("div", "row");
+    const left = el("div", "en");
+    left.style.display = "flex"; left.style.gap = "10px"; left.style.alignItems = "center";
+    left.append(sayBtn(en), el("span", "", en));
+    row.append(left, el("div", "zh", zh));
+    pl.appendChild(row);
+  });
+
+  const dl = document.getElementById("dialogueLines");
+  dialogue.forEach(([who, en, zh]) => {
+    const line = el("div", "line");
+    line.append(el("div", "speaker", who + ":"), el("div", "en", en), el("div", "zh", zh), sayBtn(en));
+    dl.appendChild(line);
+  });
+
+  const ng = document.getElementById("numberGrid");
+  numbers.forEach(([n, en, zh]) => {
+    const d = el("div", "num");
+    d.tabIndex = 0;
+    d.append(el("b", "", n), el("div", "en", en), el("span", "zh", zh));
+    d.onclick = () => speak(en);
+    d.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); speak(en); } };
+    ng.appendChild(d);
+  });
+
+  const qa = document.getElementById("quizA");
+  quizA.forEach(([subj, rest, ans, zh], i) => {
+    const q = el("div", "q");
+    q.dataset.answer = ans;
+    const sel = document.createElement("select");
+    ["—", "am", "is", "are"].forEach(o => { const op = el("option", "", o); op.value = o === "—" ? "" : o; sel.appendChild(op); });
+    q.append(el("span", "", `${i + 1}. ${subj} `), sel, el("span", "", " " + rest), el("span", "zh", zh));
+    qa.appendChild(q);
+  });
+
+  const qb = document.getElementById("quizB");
+  quizB.forEach(([zh, ans], i) => {
+    const q = el("div", "q");
+    q.dataset.answer = ans;
+    const inp = document.createElement("input");
+    inp.type = "text"; inp.autocomplete = "off"; inp.spellcheck = false;
+    inp.setAttribute("aria-label", zh);
+    q.append(el("span", "", `${i + 1}. ${zh} → `), inp);
+    qb.appendChild(q);
+  });
+
+  function checkQuiz(id) {
+    const qs = document.querySelectorAll(`#${id} .q`);
+    let right = 0;
+    qs.forEach(q => {
+      const field = q.querySelector("select, input");
+      const val = field.value.trim().toLowerCase().replace(/\s+/g, " ");
+      const ok = val === q.dataset.answer;
+      q.classList.toggle("correct", ok);
+      q.classList.toggle("incorrect", !ok);
+      if (ok) right++;
+    });
+    const msg = right === qs.length ? " 🎉 Excellent! 太棒了！" : " Try again! 再试一次！";
+    document.getElementById(id + "-score").textContent = `${right} / ${qs.length}` + msg;
+  }
+
+  // ---------- Toggle Chinese ----------
+  const btn = document.getElementById("toggleZh");
+  btn.onclick = () => {
+    const hidden = document.body.classList.toggle("hide-zh");
+    btn.textContent = hidden ? "Show Chinese 显示中文" : "Hide Chinese 隐藏中文";
+  };
+</script>
+</body>
+</html>
